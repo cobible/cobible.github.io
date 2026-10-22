@@ -56,7 +56,13 @@ export function Landing({ lang }: { lang: Lang }) {
               {c.features.map((f) => (
                 <article key={f.t} className="flex flex-col rounded-3xl border border-border bg-background p-6">
                   <div className="mb-6 flex h-64 items-start justify-center overflow-hidden rounded-2xl bg-secondary pt-6">
-                    <img src={shots[f.img as keyof typeof shots]} alt={f.t} loading="lazy" className="w-40 rounded-xl shadow-phone" />
+                    {f.img === "book" && lang === "ru" ? (
+                      [shots.verse1, shots.verse2].map((src, i) => (
+                        <img key={src} src={src} alt={`${f.t} — CoBible`} loading="lazy" className={`w-28 rounded-xl shadow-phone ${i > 0 ? "-ml-5" : ""}`} />
+                      ))
+                    ) : (
+                      <img src={shots[f.img as keyof typeof shots]} alt={f.t} loading="lazy" className="w-40 rounded-xl shadow-phone" />
+                    )}
                   </div>
                   <h3 className="font-display text-xl font-semibold">{f.t}</h3>
                   <p className="mt-2 text-muted-foreground">{f.d}</p>

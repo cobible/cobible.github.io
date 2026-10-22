@@ -6,10 +6,12 @@ import s5 from "@/assets/shot5.png.asset.json";
 import s6 from "@/assets/shot6.png.asset.json";
 import s7 from "@/assets/shot7.png.asset.json";
 import s8 from "@/assets/shot8.png.asset.json";
+import s9 from "@/assets/verse1.png.asset.json";
+import s10 from "@/assets/verse2.png.asset.json";
 
 export type Lang = "en" | "ru";
 export const PRIVACY_URL = "https://antkeepapp.github.io/cobible-privacy/";
-export const shots = { plans: s1.url, planDetail: s2.url, home: s3.url, reader: s4.url, qa: s5.url, player: s6.url, podcasts: s7.url, book: s8.url };
+export const shots = { plans: s1.url, planDetail: s2.url, home: s3.url, reader: s4.url, qa: s5.url, player: s6.url, podcasts: s7.url, book: s8.url, verse1: s9.url, verse2: s10.url };
 
 export const platforms = [
   { id: "android", name: "Google Play", sub: { en: "Android phones & tablets", ru: "Телефоны и планшеты Android" } },
@@ -56,6 +58,7 @@ export const t = {
       { q: "Which languages are available?", a: "English and Russian." },
       { q: "How does the AI feature work?", a: "The app prepares an analysis for each chapter, and any single verse can be researched separately. You can also type your own question, and Gemini AI answers it in the context of that chapter or verse." },
       { q: "What are the podcasts about?", a: "Each episode explains the Bible chapter it belongs to: what happened, which lessons the chapter holds, how to understand the events or laws described there and what is useful for people living in the modern world." },
+      { q: "Can podcasts be listened to offline?", a: "Yes. Download a podcast episode in advance and it stays available for offline listening." },
       { q: "Where are my notes kept?", a: "Optional Google Drive sync keeps your notes and reading progress safe across your devices." },
       { q: "Where is the privacy policy?", a: "The privacy policy is published at antkeepapp.github.io/cobible-privacy." },
     ],
@@ -98,6 +101,7 @@ export const t = {
       { q: "Какие языки доступны?", a: "Русский и английский." },
       { q: "Как работает ИИ?", a: "Для каждой главы приложение готовит анализ, а любой отдельный стих можно исследовать отдельно. Можно задать и свой вопрос — Gemini AI ответит в контексте этой главы или стиха." },
       { q: "О чём подкасты?", a: "Каждый выпуск разбирает главу Библии, к которой относится: что происходило, какие есть уроки, как понимать описанные события или закон и что в этом полезного для людей, живущих в современном мире." },
+      { q: "Можно ли слушать подкасты офлайн?", a: "Да. Заранее скачайте выпуск подкаста — и он будет доступен для прослушивания без интернета." },
       { q: "Где хранятся мои заметки?", a: "Синхронизация через Google Drive по желанию: заметки и прогресс чтения сохраняются на всех ваших устройствах." },
       { q: "Где политика конфиденциальности?", a: "Политика конфиденциальности опубликована на antkeepapp.github.io/cobible-privacy." },
     ],
