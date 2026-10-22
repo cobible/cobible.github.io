@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- All site copy for both languages lives in src/lib/content.ts (en at /, ru at /ru); the shared page is src/components/Landing.tsx — keeps languages in sync.

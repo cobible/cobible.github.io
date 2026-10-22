@@ -1,0 +1,13 @@
+# CoBible
+
+> CoBible is a cross-platform Bible reading and study app (English and Russian). It combines the Bible text, audio chapters, AI-generated chapter study questions (Gemini AI), reading plans, streaks and optional Google Drive sync.
+
+## Pages
+- [English site](/): features, installation, FAQ
+- [Русская версия](/ru): возможности, установка, вопросы
+
+## Platforms
+Planned: Google Play (Android), APK (Android), Windows, macOS, then App Store (iPhone/iPad). Download links are not yet published.
+
+## Legal
+- [Privacy policy](https://antkeepapp.github.io/cobible-privacy/)
