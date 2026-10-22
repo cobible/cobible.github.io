@@ -45,7 +45,7 @@ export function Landing({ lang }: { lang: Lang }) {
           </div>
           <div className="relative mx-auto flex w-full max-w-md justify-center">
             <Phone src={shots.home} alt="CoBible home screen" className="w-[52%] -rotate-3" />
-            <Phone src={shots.qa} alt="CoBible AI chapter questions" className="-ml-10 mt-12 w-[52%] rotate-3" />
+            <Phone src={shots.qa} alt="CoBible AI chapter analysis" className="-ml-10 mt-12 w-[52%] rotate-3" />
           </div>
         </section>
 
