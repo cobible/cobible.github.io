@@ -1,17 +1,30 @@
 import s1 from "@/assets/shot1.png.asset.json";
-import s2 from "@/assets/shot2.png.asset.json";
 import s3 from "@/assets/shot3.png.asset.json";
 import s4 from "@/assets/shot4.png.asset.json";
 import s5 from "@/assets/shot5.png.asset.json";
-import s6 from "@/assets/shot6.png.asset.json";
 import s7 from "@/assets/shot7.png.asset.json";
 import s8 from "@/assets/shot8.png.asset.json";
 import s9 from "@/assets/verse1.png.asset.json";
 import s10 from "@/assets/verse2.png.asset.json";
+import e1 from "@/assets/en_home.png.asset.json";
+import e2 from "@/assets/en_reader.png.asset.json";
+import e3 from "@/assets/en_verse_select.png.asset.json";
+import e4 from "@/assets/en_verse_research.png.asset.json";
+import e5 from "@/assets/en_plans.png.asset.json";
+import e6 from "@/assets/en_podcasts.png.asset.json";
+import e7 from "@/assets/en_ai.png.asset.json";
 
 export type Lang = "en" | "ru";
 export const PRIVACY_URL = "https://antkeepapp.github.io/cobible-privacy/";
-export const shots = { plans: s1.url, planDetail: s2.url, home: s3.url, reader: s4.url, qa: s5.url, player: s6.url, podcasts: s7.url, book: s8.url, verse1: s9.url, verse2: s10.url };
+type ShotKey = "plans" | "home" | "reader" | "qa" | "podcasts" | "book";
+export const shots: Record<Lang, Record<ShotKey, string>> = {
+  en: { plans: e5.url, home: e1.url, reader: e2.url, qa: e7.url, podcasts: e6.url, book: e4.url },
+  ru: { plans: s1.url, home: s3.url, reader: s4.url, qa: s5.url, podcasts: s7.url, book: s8.url },
+};
+export const verseShots: Record<Lang, string[]> = {
+  en: [e3.url, e4.url],
+  ru: [s9.url, s10.url],
+};
 
 export const platforms = [
   { id: "android", name: "Google Play", sub: { en: "Android phones & tablets", ru: "Телефоны и планшеты Android" } },

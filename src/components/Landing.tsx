@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import icon from "@/assets/icon.png.asset.json";
-import { platforms, PRIVACY_URL, shots, t, type Lang } from "@/lib/content";
+import { platforms, PRIVACY_URL, shots, t, verseShots, type Lang } from "@/lib/content";
 
 function Phone({ src, alt, className = "" }: { src: string; alt: string; className?: string }) {
   return (
@@ -12,6 +12,8 @@ function Phone({ src, alt, className = "" }: { src: string; alt: string; classNa
 
 export function Landing({ lang }: { lang: Lang }) {
   const c = t[lang];
+  const sh = shots[lang];
+  const verse = verseShots[lang];
   const other = lang === "en" ? "/ru" : "/";
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -44,8 +46,8 @@ export function Landing({ lang }: { lang: Lang }) {
             </ul>
           </div>
           <div className="relative mx-auto flex w-full max-w-md justify-center">
-            <Phone src={shots.home} alt="CoBible home screen" className="w-[52%] -rotate-3" />
-            <Phone src={shots.qa} alt="CoBible AI chapter analysis" className="-ml-10 mt-12 w-[52%] rotate-3" />
+            <Phone src={sh.home} alt="CoBible home screen" className="w-[52%] -rotate-3" />
+            <Phone src={sh.qa} alt="CoBible AI chapter analysis" className="-ml-10 mt-12 w-[52%] rotate-3" />
           </div>
         </section>
 
@@ -56,12 +58,12 @@ export function Landing({ lang }: { lang: Lang }) {
               {c.features.map((f) => (
                 <article key={f.t} className="flex flex-col rounded-3xl border border-border bg-background p-6">
                   <div className="mb-6 flex h-64 items-start justify-center overflow-hidden rounded-2xl bg-secondary pt-6">
-                    {f.img === "book" && lang === "ru" ? (
-                      [shots.verse1, shots.verse2].map((src, i) => (
+                    {f.img === "book" ? (
+                      verse.map((src, i) => (
                         <img key={src} src={src} alt={`${f.t} — CoBible`} loading="lazy" className={`w-28 rounded-xl shadow-phone ${i > 0 ? "-ml-5" : ""}`} />
                       ))
                     ) : (
-                      <img src={shots[f.img as keyof typeof shots]} alt={f.t} loading="lazy" className="w-40 rounded-xl shadow-phone" />
+                      <img src={sh[f.img]} alt={f.t} loading="lazy" className="w-40 rounded-xl shadow-phone" />
                     )}
                   </div>
                   <h3 className="font-display text-xl font-semibold">{f.t}</h3>
