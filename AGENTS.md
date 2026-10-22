@@ -10,3 +10,4 @@
 <!-- LOVABLE:END -->
 
 - All site copy for both languages lives in src/lib/content.ts (en at /, ru at /ru); the shared page is src/components/Landing.tsx — keeps languages in sync.
+- App screenshots shown on the site must match the page language: shots and verseShots in src/lib/content.ts are keyed per language, so never reuse one language's screenshot on the other language's page.
