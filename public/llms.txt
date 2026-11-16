@@ -7,7 +7,9 @@
 - [Русская версия](/ru): возможности, установка, вопросы
 
 ## Platforms
-Planned: Google Play (Android), APK (Android), Windows, macOS, then App Store (iPhone/iPad). Download links are not yet published.
+Available via GitHub Releases: Android APK, Windows x64 (ZIP), universal macOS for Intel and Apple Silicon (DMG). Google Play and App Store distribution is planned.
+- [Latest stable release](https://github.com/antkeepapp/cobible-releases/releases/latest)
+The site discovers platform files in the latest stable release automatically; versioned filenames are supported.
 
 ## Legal
 - [Privacy policy](https://antkeepapp.github.io/cobible-privacy/)

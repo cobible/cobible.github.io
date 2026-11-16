@@ -1,4 +1,9 @@
 import { Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { Download, ExternalLink } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { fetchLatestRelease, releaseDownloads, RELEASES_URL } from "@/lib/releases";
 import icon from "@/assets/icon.png.asset.json";
 import { platforms, PRIVACY_URL, shots, t, verseShots, type Lang } from "@/lib/content";
 
@@ -15,6 +20,10 @@ export function Landing({ lang }: { lang: Lang }) {
   const sh = shots[lang];
   const verse = verseShots[lang];
   const other = lang === "en" ? "/ru" : "/";
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => setHydrated(true), []);
+  const release = useQuery({ queryKey: ["latest-release"], queryFn: fetchLatestRelease, enabled: hydrated, staleTime: 60_000, retry: 1 });
+  const downloads = release.data ? releaseDownloads(release.data) : {};
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-20 border-b border-border bg-background/85 backdrop-blur">
@@ -79,14 +88,17 @@ export function Landing({ lang }: { lang: Lang }) {
             <h2 className="font-display text-3xl font-semibold md:text-4xl">{c.installTitle}</h2>
             <p className="mt-3 max-w-2xl text-muted-foreground">{c.installLead}</p>
             <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {platforms.map((p) => (
-                <div key={p.id} className="rounded-3xl border border-border bg-card p-6">
+              {platforms.map((p) => {
+                const direct = p.id === "apk" || p.id === "windows" || p.id === "mac";
+                const asset = direct ? downloads[p.id] : undefined;
+                return (
+                <div key={p.id} className="flex flex-col rounded-3xl border border-border bg-card p-6">
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <h3 className="font-display text-xl font-semibold">{p.name}</h3>
                       <p className="text-sm text-muted-foreground">{p.sub[lang]}</p>
                     </div>
-                    <span className="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">{c.soon}</span>
+                    {!direct && <span className="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">{c.soon}</span>}
                   </div>
                   <ol className="mt-5 space-y-2 text-sm">
                     {c.steps[p.id].map((s, i) => (
@@ -96,8 +108,17 @@ export function Landing({ lang }: { lang: Lang }) {
                       </li>
                     ))}
                   </ol>
+                  {direct && <div className="mt-auto pt-6">
+                    {asset ? <>
+                      <p className="mb-3 break-all text-xs text-muted-foreground">{release.data?.tag_name} · {asset.name}</p>
+                      <Button asChild className="w-full"><a href={asset.browser_download_url}><Download aria-hidden="true" />{c.download}</a></Button>
+                    </> : <>
+                      <p role="status" className="mb-3 text-sm text-muted-foreground">{release.isPending && !release.isError ? c.releaseLoading : release.isError ? c.releaseError : c.releaseMissing}</p>
+                      <Button asChild variant="outline" className="w-full"><a href={RELEASES_URL} target="_blank" rel="noopener noreferrer"><ExternalLink aria-hidden="true" />{c.viewRelease}</a></Button>
+                    </>}
+                  </div>}
                 </div>
-              ))}
+              );})}
             </div>
           </div>
         </section>
