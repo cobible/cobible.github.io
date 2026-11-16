@@ -16,6 +16,7 @@ import e7 from "@/assets/en_ai.png.asset.json";
 
 export type Lang = "en" | "ru";
 export const PRIVACY_URL = "https://antkeepapp.github.io/cobible-privacy/";
+export const SIDELOADLY_URL = "https://sideloadly.io/";
 type ShotKey = "plans" | "home" | "reader" | "qa" | "podcasts" | "book";
 export const shots: Record<Lang, Record<ShotKey, string>> = {
   en: { plans: e5.url, home: e1.url, reader: e2.url, qa: e7.url, podcasts: e6.url, book: e4.url },
@@ -31,7 +32,8 @@ export const platforms = [
   { id: "apk", name: "APK", sub: { en: "Direct install for Android", ru: "Прямая установка на Android" } },
   { id: "windows", name: "Windows", sub: { en: "Windows x64 · ZIP", ru: "Windows x64 · ZIP" } },
   { id: "mac", name: "macOS", sub: { en: "Intel & Apple Silicon · DMG", ru: "Intel и Apple Silicon · DMG" } },
-  { id: "ios", name: "App Store", sub: { en: "iPhone & iPad", ru: "iPhone и iPad" } },
+  { id: "ios", name: "iOS · IPA", sub: { en: "iPhone & iPad · via Sideloadly", ru: "iPhone и iPad · через Sideloadly" } },
+  { id: "appstore", name: "App Store", sub: { en: "iPhone & iPad", ru: "iPhone и iPad" } },
 ] as const;
 
 export const t = {
@@ -61,18 +63,47 @@ export const t = {
       { t: "Streaks & stats", d: "See your daily streak, best record and chapters read, plus a verse of the day on the home screen.", img: "home" },
     ],
     installTitle: "How to install CoBible",
-    installLead: "Download the latest stable release for Android, Windows x64 or macOS (Intel and Apple Silicon). Google Play and App Store links are coming later.",
+    installLead: "Download the latest stable release for Android, Windows x64, macOS (Intel and Apple Silicon) or iPhone and iPad. Install the iOS IPA using Sideloadly on a Windows PC or Mac. Google Play and App Store links are coming later.",
     steps: {
       android: ["Open Google Play on your device.", "Search for “CoBible”.", "Tap Install and open the app."],
       apk: ["Download the APK file from this page.", "Allow installs from this source when Android asks.", "Open the file and tap Install."],
       windows: ["Download the ZIP archive below.", "Extract the archive into a folder.", "Open the CoBible application from that folder."],
       mac: ["Download and open the DMG file below.", "Move CoBible to the Applications folder.", "Open it from Launchpad."],
-      ios: ["Open the App Store.", "Search for “CoBible”.", "Tap Get and open the app."],
+      ios: ["Download the IPA file below to your computer.", "Expand the instructions for Windows or Mac below to install it on your iPhone or iPad."],
+      appstore: ["Open the App Store.", "Search for “CoBible”.", "Tap Get and open the app."],
+    },
+    sideload: {
+      link: "Get Sideloadly & requirements",
+      windowsTitle: "Install using Windows",
+      macTitle: "Install using Mac",
+      windows: [
+        "On the official Sideloadly website, install the web versions of iTunes and iCloud linked under “Before you install”. If you have Microsoft Store versions, uninstall those first. Restart your PC if the device is not detected.",
+        "Download Sideloadly for Windows from that same website, install it and open it.",
+      ],
+      mac: [
+        "Download Sideloadly for macOS from its official website. Open the DMG, move Sideloadly to Applications and launch it. Follow any setup prompts it displays.",
+      ],
+      common: [
+        "Connect your iPhone or iPad to the computer with a USB cable, unlock it and tap “Trust” if asked. Keep an internet connection available.",
+        "In Sideloadly, select your iPhone or iPad (not the Mac itself), then drag the downloaded CoBible .ipa file into the window.",
+        "Enter your Apple Account (Apple ID) in Sideloadly and click “Start”. Enter the password and verification code there if requested — never on this website. Wait until installation finishes.",
+        "On your iPhone or iPad, open Settings → General → VPN & Device Management. Select the developer profile for the Apple Account you used and tap “Trust”; follow any confirmation prompts.",
+        "On iOS / iPadOS 16 or later, enable Settings → Privacy & Security → Developer Mode if required. Restart the device and confirm. If the option is missing, check again after the first installation attempt.",
+        "Open CoBible from your Home Screen.",
+      ],
+      updatesTitle: "How to keep apps up to date",
+      updates: [
+        "A free Apple ID gives apps a 7-day validity period and allows up to 3 apps at the same time.",
+        "Sideloadly refreshes apps automatically through a background process on your computer. Keep the computer on and Sideloadly running, with your phone and computer on the same Wi-Fi network. Wireless refresh requires Wi-Fi sync in iTunes (Windows) or Finder (Mac).",
+        "If your computer is not always on: AltStore Classic refreshes through AltServer on a computer on the same network; allow AltStore access to the local network on your iPhone. SideStore needs a computer only for the first installation, then refreshes from the phone using LocalDevVPN.",
+        "If an app expires, do not delete it: re-sign it with the same Apple ID, otherwise you will lose the app’s data.",
+      ],
+      troubleshooting: "Sideloadly setup & troubleshooting",
     },
     faqTitle: "Frequently asked questions",
     faq: [
       { q: "What is CoBible?", a: "CoBible is a Bible reading and study app that combines the Bible text, podcast episodes explaining each chapter, AI analysis of chapters and verses and reading plans." },
-      { q: "Which devices are supported?", a: "Android via APK, Windows x64 and macOS on Intel and Apple Silicon. Google Play and App Store distribution is planned." },
+      { q: "Which devices are supported?", a: "Android via APK, Windows x64, macOS on Intel and Apple Silicon, and iPhone or iPad via an IPA installed with Sideloadly from Windows or Mac. Google Play and App Store distribution is planned." },
       { q: "Which languages are available?", a: "English and Russian." },
       { q: "How does the AI feature work?", a: "The app prepares an analysis for each chapter, and any single verse can be researched separately. You can also type your own question, and Gemini AI answers it in the context of that chapter or verse." },
       { q: "What are the podcasts about?", a: "Each episode explains the Bible chapter it belongs to: what happened, which lessons the chapter holds, how to understand the events or laws described there and what is useful for people living in the modern world." },
@@ -109,18 +140,47 @@ export const t = {
       { t: "Серии и статистика", d: "Дни подряд, рекорд и прочитанные главы, а также цитата дня на главном экране.", img: "home" },
     ],
     installTitle: "Как установить CoBible",
-    installLead: "Скачайте последний стабильный выпуск для Android, Windows x64 или macOS (Intel и Apple Silicon). Ссылки на Google Play и App Store появятся позже.",
+    installLead: "Скачайте последний стабильный выпуск для Android, Windows x64, macOS (Intel и Apple Silicon) или iPhone и iPad. IPA-файл для iOS устанавливается через Sideloadly с компьютера Windows или Mac. Ссылки на Google Play и App Store появятся позже.",
     steps: {
       android: ["Откройте Google Play на устройстве.", "Найдите «CoBible».", "Нажмите «Установить» и откройте приложение."],
       apk: ["Скачайте APK-файл с этой страницы.", "Разрешите установку из этого источника, когда Android спросит.", "Откройте файл и нажмите «Установить»."],
       windows: ["Скачайте ZIP-архив ниже.", "Распакуйте архив в папку.", "Откройте приложение CoBible из этой папки."],
       mac: ["Скачайте и откройте DMG-файл ниже.", "Перенесите CoBible в папку «Программы».", "Откройте его через Launchpad."],
-      ios: ["Откройте App Store.", "Найдите «CoBible».", "Нажмите «Загрузить» и откройте приложение."],
+      ios: ["Скачайте IPA-файл ниже на компьютер.", "Раскройте инструкцию для Windows или Mac ниже, чтобы установить его на iPhone или iPad."],
+      appstore: ["Откройте App Store.", "Найдите «CoBible».", "Нажмите «Загрузить» и откройте приложение."],
+    },
+    sideload: {
+      link: "Скачать Sideloadly и проверить требования",
+      windowsTitle: "Установка с Windows",
+      macTitle: "Установка с Mac",
+      windows: [
+        "На официальном сайте Sideloadly установите версии iTunes и iCloud по ссылкам в разделе «Before you install». Нужны версии с сайта Apple, не из Microsoft Store: версии из магазина сначала удалите. Если устройство не определяется, перезагрузите компьютер.",
+        "С этого же сайта скачайте Sideloadly для Windows, установите и откройте программу.",
+      ],
+      mac: [
+        "Скачайте Sideloadly для macOS с официального сайта. Откройте DMG, перенесите Sideloadly в папку «Программы» и запустите. Выполните указания программы при первом запуске.",
+      ],
+      common: [
+        "Подключите iPhone или iPad к компьютеру USB-кабелем, разблокируйте устройство и нажмите «Доверять», если появится запрос. Интернет должен быть доступен.",
+        "В Sideloadly выберите свой iPhone или iPad (не сам Mac), затем перетащите скачанный файл CoBible .ipa в окно программы.",
+        "Введите свою учётную запись Apple (Apple ID) в Sideloadly и нажмите «Start». Если программа запросит пароль и код подтверждения, введите их там — не на этом сайте. Дождитесь завершения установки.",
+        "На iPhone или iPad откройте «Настройки» → «Основные» → «VPN и управление устройством». Выберите профиль разработчика с вашей учётной записью Apple и нажмите «Доверять»; выполните запросы подтверждения.",
+        "На iOS / iPadOS 16 и новее при необходимости включите «Настройки» → «Конфиденциальность и безопасность» → «Режим разработчика». Перезагрузите устройство и подтвердите включение. Если пункта нет, проверьте его после первой попытки установки.",
+        "Откройте CoBible на главном экране устройства.",
+      ],
+      updatesTitle: "Как не терять обновления",
+      updates: [
+        "Бесплатный Apple ID даёт приложениям срок 7 дней; одновременно можно держать до 3 приложений.",
+        "Sideloadly обновляет приложения автоматически через фоновый процесс на компьютере. Компьютер должен быть включён, Sideloadly запущен, телефон и компьютер — в одной Wi-Fi сети. Для беспроводной работы нужна синхронизация по Wi-Fi в iTunes (Windows) или Finder (Mac).",
+        "Если компьютер не работает постоянно: AltStore Classic обновляет через AltServer на компьютере в той же сети; на iPhone разрешите AltStore доступ к локальной сети. SideStore нужен компьютер только для первой установки, дальше обновление идёт с телефона через LocalDevVPN.",
+        "Если приложение истекло, не удаляйте его: переподпишите тем же Apple ID, иначе потеряются данные приложения.",
+      ],
+      troubleshooting: "Настройка Sideloadly и решение проблем",
     },
     faqTitle: "Частые вопросы",
     faq: [
       { q: "Что такое CoBible?", a: "CoBible — приложение для чтения и изучения Библии: текст, подкасты с разбором каждой главы, анализ глав и отдельных стихов с помощью ИИ и планы чтения." },
-      { q: "Какие устройства поддерживаются?", a: "Android через APK, Windows x64 и macOS на Intel и Apple Silicon. Публикация в Google Play и App Store запланирована." },
+      { q: "Какие устройства поддерживаются?", a: "Android через APK, Windows x64, macOS на Intel и Apple Silicon, а также iPhone и iPad через IPA-файл, установленный с Windows или Mac с помощью Sideloadly. Публикация в Google Play и App Store запланирована." },
       { q: "Какие языки доступны?", a: "Русский и английский." },
       { q: "Как работает ИИ?", a: "Для каждой главы приложение готовит анализ, а любой отдельный стих можно исследовать отдельно. Можно задать и свой вопрос — Gemini AI ответит в контексте этой главы или стиха." },
       { q: "О чём подкасты?", a: "Каждый выпуск разбирает главу Библии, к которой относится: что происходило, какие есть уроки, как понимать описанные события или закон и что в этом полезного для людей, живущих в современном мире." },

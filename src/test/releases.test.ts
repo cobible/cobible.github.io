@@ -19,6 +19,12 @@ describe("Latest stable release downloads", () => {
   it("offers the universal macOS disk image", () => {
     expect(releaseDownloads(release).mac?.name).toBe("CoBible-v9.1.9-macos.dmg");
   });
+  it("offers the iPhone and iPad IPA from the same latest release", () => {
+    expect(releaseDownloads(release).ios?.browser_download_url).toBe("https://github.com/antkeepapp/cobible-releases/releases/download/v9.1.9/CoBible-v9.1.9-ios.ipa");
+  });
+  it("does not substitute another platform when the iOS IPA is missing", () => {
+    expect(releaseDownloads({ ...release, assets: release.assets.filter((asset) => !asset.name.endsWith(".ipa")) }).ios).toBeUndefined();
+  });
   it("does not offer draft or preview builds", () => {
     expect(releaseDownloads({ ...release, draft: true })).toEqual({});
     expect(releaseDownloads({ ...release, prerelease: true })).toEqual({});
@@ -29,6 +35,7 @@ describe("Latest stable release downloads", () => {
       browser_download_url: asset.browser_download_url.replaceAll("9.1.9", "10.0.0"),
     })) };
     expect(releaseDownloads(next).apk?.browser_download_url).toContain("/v10.0.0/CoBible-v10.0.0-android.apk");
+    expect(releaseDownloads(next).ios?.browser_download_url).toBe("https://github.com/antkeepapp/cobible-releases/releases/download/v10.0.0/CoBible-v10.0.0-ios.ipa");
   });
   it("does not substitute a different platform when an asset is missing", () => {
     expect(releaseDownloads({ ...release, assets: release.assets.filter((asset) => asset.name.endsWith(".ipa")) }).apk).toBeUndefined();

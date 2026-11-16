@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Download, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SideloadInstructions } from "@/components/SideloadInstructions";
 import { fetchLatestRelease, releaseDownloads, RELEASES_URL } from "@/lib/releases";
 import icon from "@/assets/icon.png.asset.json";
 import { platforms, PRIVACY_URL, shots, t, verseShots, type Lang } from "@/lib/content";
@@ -89,7 +90,7 @@ export function Landing({ lang }: { lang: Lang }) {
             <p className="mt-3 max-w-2xl text-muted-foreground">{c.installLead}</p>
             <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
               {platforms.map((p) => {
-                const direct = p.id === "apk" || p.id === "windows" || p.id === "mac";
+                const direct = p.id === "apk" || p.id === "windows" || p.id === "mac" || p.id === "ios";
                 const asset = direct ? downloads[p.id] : undefined;
                 return (
                 <div key={p.id} className="flex flex-col rounded-3xl border border-border bg-card p-6">
@@ -117,6 +118,7 @@ export function Landing({ lang }: { lang: Lang }) {
                       <Button asChild variant="outline" className="w-full"><a href={RELEASES_URL} target="_blank" rel="noopener noreferrer"><ExternalLink aria-hidden="true" />{c.viewRelease}</a></Button>
                     </>}
                   </div>}
+                  {p.id === "ios" && <SideloadInstructions lang={lang} />}
                 </div>
               );})}
             </div>

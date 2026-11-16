@@ -7,7 +7,7 @@
 - [Русская версия](/ru): возможности, установка, вопросы
 
 ## Platforms
-Available via GitHub Releases: Android APK, Windows x64 (ZIP), universal macOS for Intel and Apple Silicon (DMG). Google Play and App Store distribution is planned.
+Available via GitHub Releases: Android APK, Windows x64 (ZIP), universal macOS for Intel and Apple Silicon (DMG), iOS IPA for iPhone and iPad installed using [Sideloadly](https://sideloadly.io/) from Windows or Mac. The site includes expandable instructions for both computer systems. A free Apple Account requires renewing the installation every 7 days. Google Play and App Store distribution is planned.
 - [Latest stable release](https://github.com/antkeepapp/cobible-releases/releases/latest)
 The site discovers platform files in the latest stable release automatically; versioned filenames are supported.
 

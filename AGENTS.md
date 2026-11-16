@@ -12,3 +12,4 @@
 - All site copy for both languages lives in src/lib/content.ts (en at /, ru at /ru); the shared page is src/components/Landing.tsx — keeps languages in sync.
 - App screenshots shown on the site must match the page language: shots and verseShots in src/lib/content.ts are keyed per language, so never reuse one language's screenshot on the other language's page.
 - Resolve public release downloads through a client-only React Query request to GitHub's latest stable release API; match platform suffixes rather than versioned filenames, and fall back to the latest release page when unavailable so no credentials or backend are required.
+- Keep expandable iOS installation guides in SideloadInstructions, with all translated steps in the shared content dictionary, to keep Windows and Mac instructions consistent across languages.
