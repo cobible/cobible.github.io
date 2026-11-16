@@ -3,7 +3,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Button } from "@/components/ui/button";
 import { SIDELOADLY_URL, t, type Lang } from "@/lib/content";
 
-const ILOADER_URL = "https://iloadapp.com/";
+const ILOADER_URL = "https://iloader.app/";
 
 function StepList({ steps }: { steps: readonly string[] }) {
   return (
@@ -72,57 +72,60 @@ export function SideloadInstructions({ lang }: { lang: Lang }) {
         </Accordion>
       </div>
 
-      {/* ── Sideloadly divider ── */}
-      <div className="flex items-center gap-3">
-        <div className="h-px flex-1 bg-border" />
-        <span className="shrink-0 text-sm text-muted-foreground">{c.sideloadlyDivider}</span>
-        <div className="h-px flex-1 bg-border" />
-      </div>
+      {/* ── Sideloadly (collapsed) ── */}
+      <Accordion type="single" collapsible>
+        <AccordionItem value="sideloadly-section" className="border-none">
+          <AccordionTrigger className="rounded-lg px-4 py-3 text-sm font-semibold text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+            {c.sideloadlyDivider}
+          </AccordionTrigger>
+          <AccordionContent className="motion-reduce:transition-none px-1">
 
-      {/* ── Sideloadly ── */}
-      <div>
-        <a
-          href={SIDELOADLY_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-start gap-2 text-sm font-semibold text-primary underline-offset-4 hover:underline"
-        >
-          <ExternalLink aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
-          {c.link}
-        </a>
-        <Accordion type="single" collapsible className="mt-2">
-          {sideloadlyGuides.map((guide) => (
-            <AccordionItem key={guide.id} value={guide.id}>
-              <AccordionTrigger className="gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-                {guide.title}
-              </AccordionTrigger>
-              <AccordionContent className="motion-reduce:transition-none">
-                <StepList steps={guide.steps} />
-                <Button asChild variant="link" className="mt-3 h-auto whitespace-normal px-0 text-left">
-                  <a href={`${SIDELOADLY_URL}faq`} target="_blank" rel="noopener noreferrer">
-                    <ExternalLink aria-hidden="true" />
-                    {c.troubleshooting}
-                  </a>
-                </Button>
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+            {/* Sideloadly link */}
+            <a
+              href={SIDELOADLY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-start gap-2 text-sm font-semibold text-primary underline-offset-4 hover:underline"
+            >
+              <ExternalLink aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
+              {c.link}
+            </a>
+            <Accordion type="single" collapsible className="mt-2">
+              {sideloadlyGuides.map((guide) => (
+                <AccordionItem key={guide.id} value={guide.id}>
+                  <AccordionTrigger className="gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                    {guide.title}
+                  </AccordionTrigger>
+                  <AccordionContent className="motion-reduce:transition-none">
+                    <StepList steps={guide.steps} />
+                    <Button asChild variant="link" className="mt-3 h-auto whitespace-normal px-0 text-left">
+                      <a href={`${SIDELOADLY_URL}faq`} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink aria-hidden="true" />
+                        {c.troubleshooting}
+                      </a>
+                    </Button>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
 
-        <aside
-          aria-labelledby={`ios-updates-${lang}`}
-          className="mt-5 border-l-2 border-border pl-4 text-sm leading-relaxed text-muted-foreground"
-        >
-          <h4 id={`ios-updates-${lang}`} className="font-semibold text-foreground">
-            {c.updatesTitle}
-          </h4>
-          <ul className="mt-3 space-y-3">
-            {c.updates.map((item, i) => (
-              <li key={i}>{item}</li>
-            ))}
-          </ul>
-        </aside>
-      </div>
+            <aside
+              aria-labelledby={`ios-updates-${lang}`}
+              className="mt-5 border-l-2 border-border pl-4 text-sm leading-relaxed text-muted-foreground"
+            >
+              <h4 id={`ios-updates-${lang}`} className="font-semibold text-foreground">
+                {c.updatesTitle}
+              </h4>
+              <ul className="mt-3 space-y-3">
+                {c.updates.map((item, i) => (
+                  <li key={i}>{item}</li>
+                ))}
+              </ul>
+            </aside>
+
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
     </div>
   );
 }
