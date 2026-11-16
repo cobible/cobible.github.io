@@ -5,7 +5,7 @@ import { Download, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SideloadInstructions } from "@/components/SideloadInstructions";
 import { fetchLatestRelease, releaseDownloads, RELEASES_URL } from "@/lib/releases";
-import icon from "@/assets/icon.png.asset.json";
+const icon = "/icon.png";
 import { platforms, PRIVACY_URL, shots, t, verseShots, type Lang } from "@/lib/content";
 
 function Phone({ src, alt, className = "" }: { src: string; alt: string; className?: string }) {
@@ -30,7 +30,7 @@ export function Landing({ lang }: { lang: Lang }) {
       <header className="sticky top-0 z-20 border-b border-border bg-background/85 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
           <a href="#top" className="flex items-center gap-2 font-display text-xl font-semibold">
-            <img src={icon.url} alt="CoBible logo" className="h-9 w-9" /> CoBible
+            <img src={icon} alt="CoBible logo" className="h-9 w-9 rounded-xl" /> CoBible
           </a>
           <nav className="flex items-center gap-5 text-sm">
             <a href="#features" className="hidden hover:text-primary sm:inline">{c.nav.features}</a>
