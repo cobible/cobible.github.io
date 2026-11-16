@@ -4,13 +4,14 @@ import { useQuery } from "@tanstack/react-query";
 import { Download, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SideloadInstructions } from "@/components/SideloadInstructions";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { fetchLatestRelease, releaseDownloads, RELEASES_URL } from "@/lib/releases";
 const icon = "/icon.png";
 import { platforms, PRIVACY_URL, shots, t, verseShots, type Lang } from "@/lib/content";
 
 function Phone({ src, alt, className = "" }: { src: string; alt: string; className?: string }) {
   return (
-    <div className={`overflow-hidden rounded-[2rem] border-[6px] border-foreground bg-foreground shadow-phone ${className}`}>
+    <div className={`overflow-hidden rounded-[2rem] border-[6px] border-[#18181b] bg-[#18181b] shadow-phone ${className}`}>
       <img src={src} alt={alt} loading="lazy" className="block h-auto w-full rounded-[1.5rem]" />
     </div>
   );
@@ -32,10 +33,11 @@ export function Landing({ lang }: { lang: Lang }) {
           <a href="#top" className="flex items-center gap-2 font-display text-xl font-semibold">
             <img src={icon} alt="CoBible logo" className="h-10 w-10" /> CoBible
           </a>
-          <nav className="flex items-center gap-5 text-sm">
+          <nav className="flex items-center gap-3 sm:gap-5 text-sm">
             <a href="#features" className="hidden hover:text-primary sm:inline">{c.nav.features}</a>
             <a href="#install" className="hidden hover:text-primary sm:inline">{c.nav.install}</a>
             <a href="#faq" className="hidden hover:text-primary sm:inline">{c.nav.faq}</a>
+            <ThemeToggle lang={lang} />
             <Link to={other} className="rounded-full border border-border px-3 py-1 font-medium hover:border-primary hover:text-primary">{c.langSwitch}</Link>
           </nav>
         </div>
