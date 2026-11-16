@@ -130,7 +130,7 @@ export const t = {
     faq: [
       { q: "What is CoBible?", a: "CoBible is a Bible reading and study app: full Bible text, podcast episodes that explain each chapter, AI analysis of chapters and individual verses, and reading plans." },
       { q: "Which devices are supported?", a: "Android via APK, Windows x64, macOS on Intel and Apple Silicon, and iPhone and iPad via IPA installed with SideStore or Sideloadly. Google Play and App Store listings are planned." },
-      { q: "What languages are available?", a: "Russian and English." },
+      { q: "What languages are available?", a: "Russian, English, Spanish, and Ukrainian." },
       { q: "Is it free?", a: "Yes, CoBible is completely free." },
       { q: "What is an IPA file?", a: "An IPA is the standard app format for iPhone and iPad, similar to an APK on Android. Because CoBible is not yet on the App Store, you install it using SideStore or Sideloadly, which sign the app with your Apple ID so iOS trusts it." },
     ],
@@ -228,7 +228,7 @@ export const t = {
     faq: [
       { q: "Что такое CoBible?", a: "CoBible \u2014 приложение для чтения и изучения Библии: текст, подкасты с разбором каждой главы, анализ глав и отдельных стихов с помощью ИИ и планы чтения." },
       { q: "Какие устройства поддерживаются?", a: "Android через APK, Windows x64, macOS на Intel и Apple Silicon, а также iPhone и iPad через IPA-файл, установленный с помощью SideStore или Sideloadly. Публикация в Google Play и App Store запланирована." },
-      { q: "Какие языки доступны?", a: "Русский и английский." },
+      { q: "Какие языки доступны?", a: "Русский, английский, испанский и украинский." },
       { q: "Приложение платное?", a: "Нет, CoBible полностью бесплатное." },
       { q: "Что такое IPA-файл?", a: "IPA \u2014 стандартный формат приложений для iPhone и iPad, аналог APK на Android. Пока CoBible не в App Store, его устанавливают через SideStore или Sideloadly: эти программы подписывают приложение вашим Apple\u00a0ID, и iOS доверяет ему." },
     ],

@@ -30,7 +30,7 @@ export function Landing({ lang }: { lang: Lang }) {
       <header className="sticky top-0 z-20 border-b border-border bg-background/85 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
           <a href="#top" className="flex items-center gap-2 font-display text-xl font-semibold">
-            <img src={icon} alt="CoBible logo" className="h-9 w-9 rounded-xl" /> CoBible
+            <img src={icon} alt="CoBible logo" className="h-10 w-10" /> CoBible
           </a>
           <nav className="flex items-center gap-5 text-sm">
             <a href="#features" className="hidden hover:text-primary sm:inline">{c.nav.features}</a>
