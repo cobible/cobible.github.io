@@ -1,30 +1,31 @@
-import s1 from "@/assets/shot1.png.asset.json";
-import s3 from "@/assets/shot3.png.asset.json";
-import s4 from "@/assets/shot4.png.asset.json";
-import s5 from "@/assets/shot5.png.asset.json";
-import s7 from "@/assets/shot7.png.asset.json";
-import s8 from "@/assets/shot8.png.asset.json";
-import s9 from "@/assets/verse1.png.asset.json";
-import s10 from "@/assets/verse2.png.asset.json";
-import e1 from "@/assets/en_home.png.asset.json";
-import e2 from "@/assets/en_reader.png.asset.json";
-import e3 from "@/assets/en_verse_select.png.asset.json";
-import e4 from "@/assets/en_verse_research.png.asset.json";
-import e5 from "@/assets/en_plans.png.asset.json";
-import e6 from "@/assets/en_podcasts.png.asset.json";
-import e7 from "@/assets/en_ai.png.asset.json";
+// Image paths served from /public/
+const s1 = "/shot1.png";
+const s3 = "/shot3.png";
+const s4 = "/shot4.png";
+const s5 = "/shot5.png";
+const s7 = "/shot7.png";
+const s8 = "/shot8.png";
+const s9 = "/verse1.png";
+const s10 = "/verse2.png";
+const e1 = "/en_home.png";
+const e2 = "/en_reader.png";
+const e3 = "/en_verse_select.png";
+const e4 = "/en_verse_research.png";
+const e5 = "/en_plans.png";
+const e6 = "/en_podcasts.png";
+const e7 = "/en_ai.png";
 
 export type Lang = "en" | "ru";
 export const PRIVACY_URL = "https://antkeepapp.github.io/cobible-privacy/";
 export const SIDELOADLY_URL = "https://sideloadly.io/";
 type ShotKey = "plans" | "home" | "reader" | "qa" | "podcasts" | "book";
 export const shots: Record<Lang, Record<ShotKey, string>> = {
-  en: { plans: e5.url, home: e1.url, reader: e2.url, qa: e7.url, podcasts: e6.url, book: e4.url },
-  ru: { plans: s1.url, home: s3.url, reader: s4.url, qa: s5.url, podcasts: s7.url, book: s8.url },
+  en: { plans: e5, home: e1, reader: e2, qa: e7, podcasts: e6, book: e4 },
+  ru: { plans: s1, home: s3, reader: s4, qa: s5, podcasts: s7, book: s8 },
 };
 export const verseShots: Record<Lang, string[]> = {
-  en: [e3.url, e4.url],
-  ru: [s9.url, s10.url],
+  en: [e3, e4],
+  ru: [s9, s10],
 };
 
 export const platforms = [
