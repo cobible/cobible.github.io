@@ -249,6 +249,8 @@ Defined in `src/styles.css` using OKLCH color space:
 | **2026-11-17** | Windows driver resolution via "Apple Devices" | Added MS Store link for "Apple Devices" to prevent `usbmuxd` socket errors on Windows without requiring heavy legacy iTunes desktop suites. |
 | **2026-11-17** | Standalone LocalDevVPN App Store integration | Discovered modern SideStore removed embedded VPN; added direct App Store link (`id6755608044`) and explicit connection steps. |
 | **2026-11-17** | 4-part SideStore modular guide | Split into PC setup (Part 1), iPhone trust & VPN (Part 2), CoBible IPA install & pairing fixes (Part 3), and unattended weekly Shortcuts automation (Part 4). |
+| **2026-11-17** | Auto-redirect to `/ru` via inline `<head>` script | Detecting language in an SSR-prerendered static site cannot happen server-side. An inline synchronous IIFE in `<head>` (same pattern as anti-FOUC) reads `navigator.languages` before first paint and calls `window.location.replace("/ru")` — no flicker, no extra round-trip. |
+| **2026-11-17** | Explicit language choice persisted to `localStorage["cobible-lang"]` | Auto-redirect must not override a deliberate user choice (e.g. a Russian speaker who wants the English version). Clicking the lang-switch button writes the chosen language to `localStorage`; the redirect script skips if the key is present. `replace()` (not `assign()`) is used so the `/` entry is not added to browser history. |
 
 ---
 
@@ -264,6 +266,8 @@ Defined in `src/styles.css` using OKLCH color space:
 8. **SideStore "Untrusted Developer" on first tap:** iOS blocks sideloaded apps from launching until manually trusted. **Fix:** User must navigate to *Settings → General → VPN & Device Management*, tap their Apple ID profile, and tap "Trust".
 9. **SideStore "No utun interface detected / LocalDevVPN is not connected":** Modern SideStore does not embed a VPN nor configure one in iOS Settings automatically. Installing `.ipa` files fails with `Pairing Required` or `UDID error` without an active on-device tunnel. **Fix:** Install the free **LocalDevVPN** app from the App Store, open it, tap "Connect", and approve the system VPN prompt. The VPN icon must show in the iOS status bar before SideStore can install or refresh apps.
 10. **SideStore pairing loss ("Pairing Required"):** Occurs if the pairing file was not imported or tunnel is inactive. **Fix:** Ensure LocalDevVPN is connected, then restart SideStore. If still prompted, export `.plist` from iLoader via *Manage Pairing File (Ctrl+P)*, send to iPhone, and import in *SideStore Settings → Pairing File*.
+11. **Language auto-redirect fires on every `/` visit if `localStorage` key is absent:** The redirect IIFE checks `localStorage["cobible-lang"]` before redirecting. If the user clears site data, the key disappears and auto-redirect activates again on the next visit — this is intentional (treat cleared storage as a fresh visitor). No workaround needed.
+12. **Language redirect is client-side only — static prerender always produces English HTML for `/`:** The prerendered `/index.html` contains English content. Russian-language users will briefly receive English HTML from the CDN before the inline script fires and replaces the page with `/ru`. In practice the script runs before paint so there is no visible flash, but crawlers (Googlebot) hitting `/` without JavaScript will index English content — this is acceptable since `/ru` is a separate prerendered route that crawlers can reach directly.
 
 ---
 
@@ -284,6 +288,7 @@ Defined in `src/styles.css` using OKLCH color space:
 - **Google Play platform card** — displayed with "Coming soon" badge; steps are pre-written, ready to activate when the store listing goes live.
 - **OS-aware platform highlighting** — `detectPlatform()` reads `navigator.userAgent` and `navigator.maxTouchPoints` client-side and highlights the most relevant download card with a terracotta border, glow ring, and "For your device" / "Для вашего устройства" badge.
 - **Microsoft Clarity analytics** — session recordings, heatmaps, and custom events (`download_apk`, `download_windows`, `download_mac`, `download_ios`, `click_iloader`, `click_apple_devices`, `click_localdevvpn`, `click_sideloadly`, `releases_fallback_click`) tracked via `trackEvent()` in `src/lib/utils.ts`. Project ID: `zf23mz47vo`.
+- **Automatic language redirect** — inline synchronous IIFE in `<head>` (`src/routes/__root.tsx`) checks `navigator.languages` and calls `window.location.replace("/ru")` when the browser's primary language starts with `ru` and the user is on `/`. Skips redirect if `localStorage["cobible-lang"]` is set (explicit user choice). Manual lang-switch in `Landing.tsx` writes this key on click.
 
 ### 🚧 In Progress
 - Verification of live DNS propagation on `https://cobible.github.io/`.
