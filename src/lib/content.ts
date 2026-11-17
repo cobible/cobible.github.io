@@ -111,7 +111,9 @@ export const t = {
       sidestoreInstall: [
         "Download iLoader \u2014 a free tool that installs SideStore onto your iPhone over Wi-Fi.",
         "Windows only: install \u201cApple Devices\u201d from the Microsoft Store \u2014 it provides the USB drivers iLoader needs to detect your iPhone. If you already have iTunes installed from the Microsoft Store, that works too; do not have both installed at the same time. Mac users can skip this step.",
-        "Open iLoader, connect your iPhone via USB cable, unlock it and tap \u201cTrust\u201d when prompted. iLoader installs SideStore automatically. Disconnect the cable once it finishes.",
+        "Open iLoader. In the Account section on the left, enter your Apple\u00a0ID email and password, then click \u201cLogin\u201d.",
+        "Connect your iPhone via USB cable, unlock it and tap \u201cTrust\u201d when prompted. Your iPhone will appear in the Devices section \u2014 click on it to select it.",
+        "In the Installers section, click \u201cSideStore\u00a0(Stable)\u201d. iLoader will sign and install SideStore on your iPhone automatically. Wait for it to finish, then disconnect the cable.",
         "On your iPhone open Settings \u2192 General \u2192 VPN & Device Management, find the new developer profile and tap \u201cTrust\u201d.",
         "iOS\u00a016 or later only: open Settings \u2192 Privacy & Security \u2192 Developer Mode, turn it on, restart the device and tap \u201cTurn On\u201d when asked. Skip this step on iOS\u00a015 or earlier.",
         "Open SideStore on your iPhone and sign in with your Apple\u00a0ID when prompted.",
@@ -218,7 +220,9 @@ export const t = {
       sidestoreInstall: [
         "Скачайте iLoader \u2014 бесплатную утилиту, которая устанавливает SideStore на iPhone по Wi-Fi.",
         "Только Windows: установите \u00abApple Devices\u00bb из Microsoft Store \u2014 это приложение содержит USB-драйверы, необходимые iLoader для обнаружения iPhone. Если у вас уже установлен iTunes из Microsoft Store, он тоже подойдёт; держать оба одновременно не нужно. Пользователи Mac этот шаг пропускают.",
-        "Откройте iLoader, подключите iPhone USB-кабелем, разблокируйте устройство и нажмите \u00abДоверять\u00bb. iLoader установит SideStore автоматически. Когда закончит \u2014 кабель можно отключить.",
+        "Откройте iLoader. В разделе Account слева введите email и пароль вашего Apple\u00a0ID, затем нажмите \u00abLogin\u00bb.",
+        "Подключите iPhone USB-кабелем, разблокируйте устройство и нажмите \u00abДоверять\u00bb. iPhone появится в разделе Devices \u2014 нажмите на него, чтобы выбрать.",
+        "В разделе Installers нажмите \u00abSideStore\u00a0(Stable)\u00bb. iLoader подпишет и установит SideStore на iPhone автоматически. Дождитесь окончания установки, затем отключите кабель.",
         "На iPhone откройте \u00abНастройки\u00bb \u2192 \u00abОсновные\u00bb \u2192 \u00abVPN и управление устройством\u00bb, найдите появившийся профиль разработчика и нажмите \u00abДоверять\u00bb.",
         "Только iOS\u00a016 и новее: откройте \u00abНастройки\u00bb \u2192 \u00abКонфиденциальность и безопасность\u00bb \u2192 \u00abРежим разработчика\u00bb, включите его, перезагрузите iPhone и подтвердите. На iOS\u00a015 и старше этот шаг пропустите.",
         "Откройте SideStore на iPhone и войдите со своим Apple\u00a0ID, когда появится запрос.",
