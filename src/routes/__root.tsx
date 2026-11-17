@@ -112,6 +112,11 @@ function RootShell({ children }: { children: ReactNode }) {
           }}
         />
         <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var chosen=localStorage.getItem("cobible-lang");if(chosen){return;}var langs=navigator.languages||[navigator.language||""];var isRu=langs.some(function(l){return l&&l.toLowerCase().startsWith("ru");});if(isRu&&window.location.pathname==="/"){window.location.replace("/ru");}}catch(e){}})();`,
+          }}
+        />
+        <script
           type="text/javascript"
           dangerouslySetInnerHTML={{
             __html: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, document, "clarity", "script", "zf23mz47vo");`,

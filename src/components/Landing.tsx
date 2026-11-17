@@ -43,7 +43,13 @@ export function Landing({ lang }: { lang: Lang }) {
             <a href="#install" className="hidden hover:text-primary sm:inline">{c.nav.install}</a>
             <a href="#faq" className="hidden hover:text-primary sm:inline">{c.nav.faq}</a>
             <ThemeToggle lang={lang} />
-            <Link to={other} className="rounded-full border border-border px-3 py-1 font-medium hover:border-primary hover:text-primary">{c.langSwitch}</Link>
+            <Link
+              to={other}
+              onClick={() => {
+                try { localStorage.setItem("cobible-lang", lang === "en" ? "ru" : "en"); } catch {}
+              }}
+              className="rounded-full border border-border px-3 py-1 font-medium hover:border-primary hover:text-primary"
+            >{c.langSwitch}</Link>
           </nav>
         </div>
       </header>
