@@ -109,7 +109,7 @@ export const t = {
       sidestoreTitle: "SideStore \u2014 recommended (refresh from iPhone, no computer needed)",
       sidestoreInstallTitle: "Part\u00a01 \u2014 First install (computer required once)",
       sidestoreInstall: [
-        "On your computer, go to iloadapp.com and download iLoader \u2014 a free tool that installs SideStore onto your iPhone over Wi-Fi.",
+        "Download iLoader \u2014 a free tool that installs SideStore onto your iPhone over Wi-Fi.",
         "Open iLoader, connect your iPhone via USB cable, unlock it and tap \u201cTrust\u201d when prompted. iLoader installs SideStore automatically. Disconnect the cable once it finishes.",
         "On your iPhone open Settings \u2192 General \u2192 VPN & Device Management, find the new developer profile and tap \u201cTrust\u201d.",
         "iOS\u00a016 or later only: open Settings \u2192 Privacy & Security \u2192 Developer Mode, turn it on, restart the device and tap \u201cTurn On\u201d when asked. Skip this step on iOS\u00a015 or earlier.",
@@ -214,7 +214,7 @@ export const t = {
       sidestoreTitle: "SideStore \u2014 рекомендуется (обновление с iPhone, без компьютера)",
       sidestoreInstallTitle: "\u0427асть\u00a01 \u2014 Первая установка (компьютер нужен один раз)",
       sidestoreInstall: [
-        "На компьютере зайдите на iloadapp.com и скачайте iLoader \u2014 бесплатную утилиту, которая устанавливает SideStore на iPhone по Wi-Fi.",
+        "Скачайте iLoader \u2014 бесплатную утилиту, которая устанавливает SideStore на iPhone по Wi-Fi.",
         "Откройте iLoader, подключите iPhone USB-кабелем, разблокируйте устройство и нажмите \u00abДоверять\u00bb. iLoader установит SideStore автоматически. Когда закончит \u2014 кабель можно отключить.",
         "На iPhone откройте \u00abНастройки\u00bb \u2192 \u00abОсновные\u00bb \u2192 \u00abVPN и управление устройством\u00bb, найдите появившийся профиль разработчика и нажмите \u00abДоверять\u00bb.",
         "Только iOS\u00a016 и новее: откройте \u00abНастройки\u00bb \u2192 \u00abКонфиденциальность и безопасность\u00bb \u2192 \u00abРежим разработчика\u00bb, включите его, перезагрузите iPhone и подтвердите. На iOS\u00a015 и старше этот шаг пропустите.",

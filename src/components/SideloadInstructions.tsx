@@ -42,13 +42,13 @@ export function SideloadInstructions({ lang }: { lang: Lang }) {
               {c.sidestoreInstallTitle}
             </AccordionTrigger>
             <AccordionContent className="motion-reduce:transition-none">
-              <StepList steps={c.sidestoreInstall} />
-              <Button asChild variant="link" className="mt-3 h-auto whitespace-normal px-0 text-left">
+              <Button asChild variant="link" className="mb-3 h-auto whitespace-normal px-0 text-left">
                 <a href={ILOADER_URL} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("click_iloader")}>
                   <ExternalLink aria-hidden="true" className="mr-1 inline size-4" />
-                  iloadapp.com
+                  iloader.app
                 </a>
               </Button>
+              <StepList steps={c.sidestoreInstall} />
             </AccordionContent>
           </AccordionItem>
 
