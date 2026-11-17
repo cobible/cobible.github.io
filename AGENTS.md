@@ -61,9 +61,9 @@ src/
 │   ├── error-page.ts                # Catastrophic SSR 500 fallback HTML generator
 │   ├── lovable-error-reporting.ts   # Boundary exception logger
 │   ├── releases.ts                  # GitHub API release parser and platform asset resolver
-│   └── utils.ts                     # Tailwind class merge helper (`cn` using `clsx` and `tailwind-merge`)
+│   └── utils.ts                     # Tailwind class merge helper (`cn`) + `trackEvent()` for Microsoft Clarity custom events
 ├── routes/                          # File-based TanStack routes
-│   ├── __root.tsx                   # Root layout: <head>, fonts, CSS, anti-FOUC theme script, query client
+│   ├── __root.tsx                   # Root layout: <head>, fonts, CSS, anti-FOUC theme script, Microsoft Clarity script, query client
 │   ├── index.tsx                    # English route (`/`)
 │   └── ru.tsx                       # Russian route (`/ru`)
 ├── test/                            # Automated test suite (Vitest + Testing Library)
@@ -98,7 +98,13 @@ export type Release = {
 export type Lang = "en" | "ru";
 export type ShotKey = "plans" | "home" | "reader" | "qa" | "podcasts" | "book";
 
-// 3. Theme State (src/components/ThemeToggle.tsx)
+// 3. Platform detection (src/lib/content.ts)
+// detectPlatform(ua?, maxTouchPoints?) → PlatformId | null
+// Priority: Android → "apk", iPhone/iPod/iPad/iPadOS-on-Mac → "ios", macOS → "mac", Windows → "windows", else null
+// iPadOS 13+ masquerades as "Macintosh" in Safari — distinguish via navigator.maxTouchPoints > 1
+// When a store goes live, change the return value in detectPlatform (e.g. "apk" → "android") to auto-highlight it.
+
+// 4. Theme State (src/components/ThemeToggle.tsx)
 export type Theme = "system" | "light" | "dark";
 // Storage key: localStorage.getItem("cobible-theme")
 ```
@@ -218,6 +224,9 @@ Defined in `src/styles.css` using OKLCH color space:
 8. **AVOID HEAVY RADIX MENU OVERHEAD:** For simple dropdowns in header, use pure React state to prevent multi-instance React conflicts during SSR hydration.
 9. **KEEP POWERSHELL COMPATIBILITY:** Use `;` instead of `&&` in shell commands on Windows.
 10. **TEST BEFORE PUSH:** Run `npx tsc --noEmit` and `npm test` before pushing to `main`.
+11. **PLATFORM DETECTION IS CLIENT-ONLY:** `detectPlatform()` reads `navigator` and must only run inside `useEffect` after hydration. Never call it at the module level or during SSR — it will always return `null` on the server and that is correct.
+12. **ANALYTICS EVENTS VIA `trackEvent()`:** All Microsoft Clarity custom events must go through `src/lib/utils.ts → trackEvent(name)`. Do not call `window.clarity()` directly in components.
+13. **CLARITY SCRIPT IN `__root.tsx`:** The Microsoft Clarity snippet is in `RootShell` → `<head>`. Do not move it to `<body>` or lazy-load it — placement in `<head>` ensures it fires before first user interaction.
 
 ---
 
@@ -231,6 +240,11 @@ Defined in `src/styles.css` using OKLCH color space:
 | **2026-11-17** | Add SideStore as recommended iOS method | Solves the 7-day expiry issue by allowing iPhone-only refresh via LocalDevVPN without needing a PC each week. |
 | **2026-11-17** | Pure React implementation for `ThemeToggle` | Radix DropdownMenu created a duplicate React instance warning during Vite SSR hydration. Pure React is lightweight and reliable. |
 | **2026-11-17** | Anti-FOUC inline script in `<head>` | Evaluates theme before first paint to prevent white flash when opening the site in system dark mode. |
+| **2026-11-17** | Add Google Play platform card (id `"android"`) | Prepares the UI for future store listing; currently shows "Coming soon" badge, same pattern as App Store. |
+| **2026-11-17** | `detectPlatform()` highlights APK for Android, iOS·IPA for iPhone/iPad | Stores are not live yet; we highlight the available direct-install card. When a store goes live, change the return value in `detectPlatform` from `"apk"` → `"android"` or `"ios"` → `"appstore"` as appropriate. |
+| **2026-11-17** | Platform detection runs client-side only inside `useEffect` | SSR has no `navigator`; running detection after hydration avoids server/client mismatch and CLS (card order stays fixed). |
+| **2026-11-17** | Chose Microsoft Clarity over Google Analytics 4 | Clarity is free with no session/recording limits, includes Vebvizor-style session recordings and heatmaps, and covers all current analytics needs without GA4 overhead. GA4 can be added later if Search Console integration or ad campaigns are needed. |
+| **2026-11-17** | Analytics events routed through `trackEvent()` helper in `utils.ts` | Keeps component code clean, provides a safe no-op guard when Clarity script is blocked or not yet loaded, and makes it trivial to swap or add analytics providers in one place. |
 
 ---
 
@@ -240,6 +254,8 @@ Defined in `src/styles.css` using OKLCH color space:
 2. **GitHub Pages 404 for asset directories:** GitHub Pages uses Jekyll by default, ignoring `_`-prefixed folders. **Fix:** `.output/public/.nojekyll` must be generated during build.
 3. **PowerShell `&&` syntax:** Windows PowerShell fails on `&&`. **Fix:** Use `;` to chain commands in PowerShell.
 4. **Vite duplicate plugins warning:** `@lovable.dev/vite-tanstack-config` already includes React, Tailwind, and tsconfig-paths. Adding them manually in `vite.config.ts` causes duplicate plugin crashes.
+5. **iPadOS 13+ UA collision with macOS:** Modern iPads with Safari send a `Macintosh` User-Agent identical to macOS desktop. **Fix:** `detectPlatform()` distinguishes them via `navigator.maxTouchPoints > 1` — always pass both `ua` and `maxTouchPoints` in tests; never rely on UA alone for iPad detection.
+6. **`detectPlatform()` returns `null` on SSR:** `navigator` is undefined on the server. The function guards with `typeof navigator !== "undefined"` and falls back to `""` / `0`. The `detected` state starts as `null` and is set only inside `useEffect`, so the initial SSR HTML never includes a highlighted card — this is intentional to avoid hydration mismatch.
 
 ---
 
@@ -252,13 +268,18 @@ Defined in `src/styles.css` using OKLCH color space:
 - Full Dark Theme support with system preference auto-detection, anti-FOUC script, and manual toggle.
 - Automated CI/CD deployment via GitHub Actions to GitHub Pages.
 - Responsive mobile layout with touch-friendly navigation.
+- **Google Play platform card** — displayed with "Coming soon" badge; steps are pre-written, ready to activate when the store listing goes live.
+- **OS-aware platform highlighting** — `detectPlatform()` reads `navigator.userAgent` and `navigator.maxTouchPoints` client-side and highlights the most relevant download card with a terracotta border, glow ring, and "For your device" / "Для вашего устройства" badge.
+- **Microsoft Clarity analytics** — session recordings, heatmaps, and custom download events (`download_apk`, `download_windows`, `download_mac`, `download_ios`, `click_iloader`, `click_sideloadly`, `releases_fallback_click`) tracked via `trackEvent()` in `src/lib/utils.ts`. Project ID: `zf23mz47vo`.
 
 ### 🚧 In Progress
 - Verification of live DNS propagation on `https://cobible.github.io/`.
 
 ### 📋 Planned / TODO
-- Direct links to Google Play and Apple App Store once approvals are granted.
+- Switch Google Play card from "Coming soon" to active when store listing is approved: change `detectPlatform()` return value `"apk"` → `"android"` and remove the `soon` badge logic for `"android"` id.
+- Switch App Store card from "Coming soon" to active when approved: change `detectPlatform()` return value `"ios"` → `"appstore"`.
 - Spanish (`/es`) and Ukrainian (`/uk`) localized routes.
+- Consider adding Google Analytics 4 when SEO via Google Search Console or paid ad campaigns become a priority.
 
 ### 🐛 Known Bugs
 - None currently active in codebase.
