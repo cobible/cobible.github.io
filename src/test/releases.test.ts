@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { releaseDownloads, type Release } from "@/lib/releases";
+import { detectPlatform } from "@/lib/content";
 
 const release: Release = {
   tag_name: "v9.1.9", draft: false, prerelease: false,
@@ -39,5 +40,30 @@ describe("Latest stable release downloads", () => {
   });
   it("does not substitute a different platform when an asset is missing", () => {
     expect(releaseDownloads({ ...release, assets: release.assets.filter((asset) => asset.name.endsWith(".ipa")) }).apk).toBeUndefined();
+  });
+});
+
+describe("Client platform detection", () => {
+  it("detects Android as APK", () => {
+    expect(detectPlatform("Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36")).toBe("apk");
+  });
+  it("detects iPhone as iOS IPA", () => {
+    expect(detectPlatform("Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X)")).toBe("ios");
+  });
+  it("detects classic iPad as iOS IPA", () => {
+    expect(detectPlatform("Mozilla/5.0 (iPad; CPU OS 12_2 like Mac OS X)")).toBe("ios");
+  });
+  it("detects modern iPadOS (desktop Safari UA with touch) as iOS IPA", () => {
+    expect(detectPlatform("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)", 5)).toBe("ios");
+  });
+  it("detects macOS desktop without touch as Mac", () => {
+    expect(detectPlatform("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)", 0)).toBe("mac");
+  });
+  it("detects Windows as Windows package", () => {
+    expect(detectPlatform("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")).toBe("windows");
+  });
+  it("returns null for Linux or unknown systems", () => {
+    expect(detectPlatform("Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0)")).toBeNull();
+    expect(detectPlatform("")).toBeNull();
   });
 });

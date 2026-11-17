@@ -7,7 +7,7 @@ import { SideloadInstructions } from "@/components/SideloadInstructions";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { fetchLatestRelease, releaseDownloads, RELEASES_URL } from "@/lib/releases";
 const icon = "/icon.png";
-import { platforms, PRIVACY_URL, shots, t, verseShots, type Lang } from "@/lib/content";
+import { detectPlatform, platforms, PRIVACY_URL, shots, t, verseShots, type Lang, type PlatformId } from "@/lib/content";
 
 function Phone({ src, alt, className = "" }: { src: string; alt: string; className?: string }) {
   return (
@@ -23,7 +23,11 @@ export function Landing({ lang }: { lang: Lang }) {
   const verse = verseShots[lang];
   const other = lang === "en" ? "/ru" : "/";
   const [hydrated, setHydrated] = useState(false);
-  useEffect(() => setHydrated(true), []);
+  const [detected, setDetected] = useState<PlatformId | null>(null);
+  useEffect(() => {
+    setHydrated(true);
+    setDetected(detectPlatform());
+  }, []);
   const release = useQuery({ queryKey: ["latest-release"], queryFn: fetchLatestRelease, enabled: hydrated, staleTime: 60_000, retry: 1 });
   const downloads = release.data ? releaseDownloads(release.data) : {};
   return (
@@ -92,13 +96,28 @@ export function Landing({ lang }: { lang: Lang }) {
             <p className="mt-3 max-w-2xl text-muted-foreground">{c.installLead}</p>
             <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
               {platforms.map((p) => {
+                const isCurrent = p.id === detected;
                 const direct = p.id === "apk" || p.id === "windows" || p.id === "mac" || p.id === "ios";
                 const asset = direct ? downloads[p.id] : undefined;
                 return (
-                <div key={p.id} className="flex flex-col rounded-3xl border border-border bg-card p-6">
+                <div
+                  key={p.id}
+                  className={`flex flex-col rounded-3xl border bg-card p-6 transition-all ${
+                    isCurrent
+                      ? "border-primary shadow-soft ring-1 ring-primary/40"
+                      : "border-border"
+                  }`}
+                >
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <h3 className="font-display text-xl font-semibold">{p.name}</h3>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h3 className="font-display text-xl font-semibold">{p.name}</h3>
+                        {isCurrent && (
+                          <span className="rounded-full bg-primary/15 px-2.5 py-0.5 text-xs font-semibold text-primary">
+                            {c.yourDevice}
+                          </span>
+                        )}
+                      </div>
                       <p className="text-sm text-muted-foreground">{p.sub[lang]}</p>
                     </div>
                     {!direct && <span className="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">{c.soon}</span>}

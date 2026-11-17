@@ -38,6 +38,27 @@ export const platforms = [
 ] as const;
 export type PlatformId = (typeof platforms)[number]["id"];
 
+export function detectPlatform(ua?: string, maxTouchPoints?: number): PlatformId | null {
+  const userAgent = ua ?? (typeof navigator !== "undefined" ? navigator.userAgent : "");
+  const touchPoints = maxTouchPoints ?? (typeof navigator !== "undefined" ? navigator.maxTouchPoints : 0);
+
+  // Android -> currently APK (future: "android" when store is live)
+  if (/android/i.test(userAgent)) return "apk";
+
+  // iOS & iPadOS (iPad on iOS 13+ identifies as Macintosh with touch points)
+  if (/iphone|ipod|ipad/i.test(userAgent) || (touchPoints > 1 && /macintosh/i.test(userAgent))) {
+    return "ios";
+  }
+
+  // macOS
+  if (/macintosh|mac os x/i.test(userAgent)) return "mac";
+
+  // Windows
+  if (/windows|win32|win64/i.test(userAgent)) return "windows";
+
+  return null;
+}
+
 export const t = {
   en: {
     meta: {
@@ -59,6 +80,7 @@ export const t = {
     ctaInstall: "How to install",
     ctaFeatures: "See features",
     soon: "Coming soon",
+    yourDevice: "For your device",
     download: "Download",
     releaseLoading: "Loading release\u2026",
     releaseError: "Could not load release info.",
@@ -163,6 +185,7 @@ export const t = {
     ctaInstall: "Как установить",
     ctaFeatures: "Смотреть возможности",
     soon: "Скоро",
+    yourDevice: "Для вашего устройства",
     download: "Скачать",
     releaseLoading: "Загружаю информацию о релизе\u2026",
     releaseError: "Не удалось загрузить информацию о релизе.",
