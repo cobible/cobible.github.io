@@ -5,6 +5,7 @@ import { SIDELOADLY_URL, t, type Lang } from "@/lib/content";
 import { trackEvent } from "@/lib/utils";
 
 const ILOADER_URL = "https://iloader.app/";
+const APPLE_DEVICES_URL = "https://apps.microsoft.com/detail/9NP83LWLPZ9K";
 
 function StepList({ steps }: { steps: readonly string[] }) {
   return (
@@ -42,12 +43,20 @@ export function SideloadInstructions({ lang }: { lang: Lang }) {
               {c.sidestoreInstallTitle}
             </AccordionTrigger>
             <AccordionContent className="motion-reduce:transition-none">
-              <Button asChild variant="link" className="mb-3 h-auto whitespace-normal px-0 text-left">
-                <a href={ILOADER_URL} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("click_iloader")}>
-                  <ExternalLink aria-hidden="true" className="mr-1 inline size-4" />
-                  iloader.app
-                </a>
-              </Button>
+              <div className="mb-3 flex flex-wrap gap-x-4 gap-y-1">
+                <Button asChild variant="link" className="h-auto whitespace-normal px-0 text-left">
+                  <a href={ILOADER_URL} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("click_iloader")}>
+                    <ExternalLink aria-hidden="true" className="mr-1 inline size-4" />
+                    iloader.app
+                  </a>
+                </Button>
+                <Button asChild variant="link" className="h-auto whitespace-normal px-0 text-left text-muted-foreground">
+                  <a href={APPLE_DEVICES_URL} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("click_apple_devices")}>
+                    <ExternalLink aria-hidden="true" className="mr-1 inline size-4" />
+                    {c.appleDevicesLink}
+                  </a>
+                </Button>
+              </div>
               <StepList steps={c.sidestoreInstall} />
             </AccordionContent>
           </AccordionItem>
