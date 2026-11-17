@@ -245,6 +245,7 @@ Defined in `src/styles.css` using OKLCH color space:
 | **2026-11-17** | Platform detection runs client-side only inside `useEffect` | SSR has no `navigator`; running detection after hydration avoids server/client mismatch and CLS (card order stays fixed). |
 | **2026-11-17** | Chose Microsoft Clarity over Google Analytics 4 | Clarity is free with no session/recording limits, includes Vebvizor-style session recordings and heatmaps, and covers all current analytics needs without GA4 overhead. GA4 can be added later if Search Console integration or ad campaigns are needed. |
 | **2026-11-17** | Analytics events routed through `trackEvent()` helper in `utils.ts` | Keeps component code clean, provides a safe no-op guard when Clarity script is blocked or not yet loaded, and makes it trivial to swap or add analytics providers in one place. |
+| **2026-11-17** | 4-part SideStore guide with LocalDevVPN & Shortcuts | Resolves driver issues (Apple Devices via MS Store), links LocalDevVPN from App Store, cleanly isolates CoBible IPA installation, and provides step-by-step Shortcuts automation with VPN connection for 100% wireless maintenance. |
 
 ---
 
