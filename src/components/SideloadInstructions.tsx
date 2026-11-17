@@ -6,6 +6,7 @@ import { trackEvent } from "@/lib/utils";
 
 const ILOADER_URL = "https://iloader.app/";
 const APPLE_DEVICES_URL = "https://apps.microsoft.com/detail/9NP83LWLPZ9K";
+const LOCALDEVVPN_URL = "https://apps.apple.com/app/localdevvpn/id6755608044";
 
 function StepList({ steps }: { steps: readonly string[] }) {
   return (
@@ -66,6 +67,12 @@ export function SideloadInstructions({ lang }: { lang: Lang }) {
               {c.sidestoreSetupTitle}
             </AccordionTrigger>
             <AccordionContent className="motion-reduce:transition-none">
+              <Button asChild variant="link" className="mb-3 h-auto whitespace-normal px-0 text-left">
+                <a href={LOCALDEVVPN_URL} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("click_localdevvpn")}>
+                  <ExternalLink aria-hidden="true" className="mr-1 inline size-4" />
+                  {c.localDevVpnLink}
+                </a>
+              </Button>
               <StepList steps={c.sidestoreSetup} />
             </AccordionContent>
           </AccordionItem>
