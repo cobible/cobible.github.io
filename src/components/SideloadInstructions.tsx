@@ -77,12 +77,21 @@ export function SideloadInstructions({ lang }: { lang: Lang }) {
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="sidestore-daily">
+          <AccordionItem value="sidestore-app">
             <AccordionTrigger className="gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-              {c.sidestoreDailyTitle}
+              {c.sidestoreAppTitle}
             </AccordionTrigger>
             <AccordionContent className="motion-reduce:transition-none">
-              <StepList steps={c.sidestoreDaily} />
+              <StepList steps={c.sidestoreApp} />
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="sidestore-automation">
+            <AccordionTrigger className="gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+              {c.sidestoreAutomationTitle}
+            </AccordionTrigger>
+            <AccordionContent className="motion-reduce:transition-none">
+              <StepList steps={c.sidestoreAutomation} />
             </AccordionContent>
           </AccordionItem>
 
