@@ -33,6 +33,7 @@ export const platforms = [
   { id: "windows", name: "Windows", sub: { en: "Windows x64 · ZIP", ru: "Windows x64 · ZIP" } },
   { id: "mac", name: "macOS", sub: { en: "Intel & Apple Silicon · DMG", ru: "Intel и Apple Silicon · DMG" } },
   { id: "ios", name: "iOS · IPA", sub: { en: "iPhone & iPad · SideStore / Sideloadly", ru: "iPhone и iPad · SideStore / Sideloadly" } },
+  { id: "android", name: "Google Play", sub: { en: "Android", ru: "Android" } },
   { id: "appstore", name: "App Store", sub: { en: "iPhone & iPad", ru: "iPhone и iPad" } },
 ] as const;
 export type PlatformId = (typeof platforms)[number]["id"];
@@ -170,7 +171,7 @@ export const t = {
     releasesFallback: "Страница последнего релиза",
     featuresTitle: "Всё для ежедневного чтения Библии",
     features: [
-      { t: "Текст Библии", d: "Полный текст Библии в одном месте. Навигация по книге, главе и стиху в чистом читалке.", img: "reader" as ShotKey },
+      { t: "Текст Библии", d: "Полный текст Библии в одном месте. Навигация по книге, главе и стиху в чистой читалке.", img: "reader" as ShotKey },
       { t: "Подкаст к каждой главе", d: "Слушайте короткий выпуск с разбором каждой главы: кто говорит, что происходит и почему это важно.", img: "podcasts" as ShotKey },
       { t: "Анализ с помощью ИИ", d: "Задавайте вопросы о главе или отдельном стихе. ИИ опирается на текст и контекст и даёт чёткие, обоснованные ответы.", img: "qa" as ShotKey },
       { t: "Планы чтения", d: "Канонический, хронологический, исторический, пророческий, Евангелия и другие. Прогресс по каждой главе.", img: "plans" as ShotKey },
