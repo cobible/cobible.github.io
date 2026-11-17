@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { SideloadInstructions } from "@/components/SideloadInstructions";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { fetchLatestRelease, releaseDownloads, RELEASES_URL } from "@/lib/releases";
+import { trackEvent } from "@/lib/utils";
 const icon = "/icon.png";
 import { detectPlatform, platforms, PRIVACY_URL, shots, t, verseShots, type Lang, type PlatformId } from "@/lib/content";
 
@@ -133,10 +134,10 @@ export function Landing({ lang }: { lang: Lang }) {
                   {direct && <div className="mt-auto pt-6">
                     {asset ? <>
                       <p className="mb-3 break-all text-xs text-muted-foreground">{release.data?.tag_name} · {asset.name}</p>
-                      <Button asChild className="w-full"><a href={asset.browser_download_url}><Download aria-hidden="true" />{c.download}</a></Button>
+                      <Button asChild className="w-full"><a href={asset.browser_download_url} onClick={() => trackEvent(`download_${p.id}`)}><Download aria-hidden="true" />{c.download}</a></Button>
                     </> : <>
                       <p role="status" className="mb-3 text-sm text-muted-foreground">{release.isPending && !release.isError ? c.releaseLoading : release.isError ? c.releaseError : c.releaseMissing}</p>
-                      <Button asChild variant="outline" className="w-full"><a href={RELEASES_URL} target="_blank" rel="noopener noreferrer"><ExternalLink aria-hidden="true" />{c.viewRelease}</a></Button>
+                      <Button asChild variant="outline" className="w-full"><a href={RELEASES_URL} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("releases_fallback_click")}><ExternalLink aria-hidden="true" />{c.viewRelease}</a></Button>
                     </>}
                   </div>}
                   {p.id === "ios" && <SideloadInstructions lang={lang} />}

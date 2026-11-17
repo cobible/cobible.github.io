@@ -2,6 +2,7 @@ import { ExternalLink } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { SIDELOADLY_URL, t, type Lang } from "@/lib/content";
+import { trackEvent } from "@/lib/utils";
 
 const ILOADER_URL = "https://iloader.app/";
 
@@ -43,7 +44,7 @@ export function SideloadInstructions({ lang }: { lang: Lang }) {
             <AccordionContent className="motion-reduce:transition-none">
               <StepList steps={c.sidestoreInstall} />
               <Button asChild variant="link" className="mt-3 h-auto whitespace-normal px-0 text-left">
-                <a href={ILOADER_URL} target="_blank" rel="noopener noreferrer">
+                <a href={ILOADER_URL} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("click_iloader")}>
                   <ExternalLink aria-hidden="true" className="mr-1 inline size-4" />
                   iloadapp.com
                 </a>
@@ -85,6 +86,7 @@ export function SideloadInstructions({ lang }: { lang: Lang }) {
               href={SIDELOADLY_URL}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent("click_sideloadly")}
               className="inline-flex items-start gap-2 text-sm font-semibold text-primary underline-offset-4 hover:underline"
             >
               <ExternalLink aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
