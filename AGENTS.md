@@ -245,7 +245,10 @@ Defined in `src/styles.css` using OKLCH color space:
 | **2026-11-17** | Platform detection runs client-side only inside `useEffect` | SSR has no `navigator`; running detection after hydration avoids server/client mismatch and CLS (card order stays fixed). |
 | **2026-11-17** | Chose Microsoft Clarity over Google Analytics 4 | Clarity is free with no session/recording limits, includes Vebvizor-style session recordings and heatmaps, and covers all current analytics needs without GA4 overhead. GA4 can be added later if Search Console integration or ad campaigns are needed. |
 | **2026-11-17** | Analytics events routed through `trackEvent()` helper in `utils.ts` | Keeps component code clean, provides a safe no-op guard when Clarity script is blocked or not yet loaded, and makes it trivial to swap or add analytics providers in one place. |
-| **2026-11-17** | 4-part SideStore guide with LocalDevVPN & Shortcuts | Resolves driver issues (Apple Devices via MS Store), links LocalDevVPN from App Store, cleanly isolates CoBible IPA installation, and provides step-by-step Shortcuts automation with VPN connection for 100% wireless maintenance. |
+| **2026-11-17** | Update iLoader domain and top-placement | Replaced dead `iloadapp.com` with `https://iloader.app/` and placed the link at the top of Part 1. |
+| **2026-11-17** | Windows driver resolution via "Apple Devices" | Added MS Store link for "Apple Devices" to prevent `usbmuxd` socket errors on Windows without requiring heavy legacy iTunes desktop suites. |
+| **2026-11-17** | Standalone LocalDevVPN App Store integration | Discovered modern SideStore removed embedded VPN; added direct App Store link (`id6755608044`) and explicit connection steps. |
+| **2026-11-17** | 4-part SideStore modular guide | Split into PC setup (Part 1), iPhone trust & VPN (Part 2), CoBible IPA install & pairing fixes (Part 3), and unattended weekly Shortcuts automation (Part 4). |
 
 ---
 
@@ -257,6 +260,10 @@ Defined in `src/styles.css` using OKLCH color space:
 4. **Vite duplicate plugins warning:** `@lovable.dev/vite-tanstack-config` already includes React, Tailwind, and tsconfig-paths. Adding them manually in `vite.config.ts` causes duplicate plugin crashes.
 5. **iPadOS 13+ UA collision with macOS:** Modern iPads with Safari send a `Macintosh` User-Agent identical to macOS desktop. **Fix:** `detectPlatform()` distinguishes them via `navigator.maxTouchPoints > 1` — always pass both `ua` and `maxTouchPoints` in tests; never rely on UA alone for iPad detection.
 6. **`detectPlatform()` returns `null` on SSR:** `navigator` is undefined on the server. The function guards with `typeof navigator !== "undefined"` and falls back to `""` / `0`. The `detected` state starts as `null` and is set only inside `useEffect`, so the initial SSR HTML never includes a highlighted card — this is intentional to avoid hydration mismatch.
+7. **iLoader Windows USB detection (`Failed to connect to usbmuxd: device socket io failed`):** Windows lacks Apple USB multiplexing drivers out of the box. **Fix:** Install "Apple Devices" from the Microsoft Store (or iTunes from MS Store). Do not have both desktop and Store builds installed at the same time.
+8. **SideStore "Untrusted Developer" on first tap:** iOS blocks sideloaded apps from launching until manually trusted. **Fix:** User must navigate to *Settings → General → VPN & Device Management*, tap their Apple ID profile, and tap "Trust".
+9. **SideStore "No utun interface detected / LocalDevVPN is not connected":** Modern SideStore does not embed a VPN nor configure one in iOS Settings automatically. Installing `.ipa` files fails with `Pairing Required` or `UDID error` without an active on-device tunnel. **Fix:** Install the free **LocalDevVPN** app from the App Store, open it, tap "Connect", and approve the system VPN prompt. The VPN icon must show in the iOS status bar before SideStore can install or refresh apps.
+10. **SideStore pairing loss ("Pairing Required"):** Occurs if the pairing file was not imported or tunnel is inactive. **Fix:** Ensure LocalDevVPN is connected, then restart SideStore. If still prompted, export `.plist` from iLoader via *Manage Pairing File (Ctrl+P)*, send to iPhone, and import in *SideStore Settings → Pairing File*.
 
 ---
 
@@ -265,13 +272,18 @@ Defined in `src/styles.css` using OKLCH color space:
 ### ✅ Working Features
 - Bilingual landing page (English at `/`, Russian at `/ru`).
 - Dynamic release resolution from `antkeepapp/cobible-releases` with fallback to releases page.
-- Comprehensive installation guides for APK, Windows, macOS, and iOS (SideStore & Sideloadly).
+- Comprehensive installation guides for APK, Windows, macOS, and iOS (SideStore 4-part guide & Sideloadly).
+- **4-part modular SideStore iOS guide**:
+  - Part 1: iLoader setup on PC, Windows Apple Devices driver, manual Apple ID login and device selection.
+  - Part 2: iPhone developer trust, iOS 16 Developer Mode, and standalone LocalDevVPN installation from App Store.
+  - Part 3: CoBible IPA sideloading, pairing troubleshooting, and manual 7-day wireless refresh.
+  - Part 4: Automated weekly background renewal via iOS Shortcuts (auto-connects LocalDevVPN, waits 5s, triggers `Refresh All Apps`, waits 30-40s, disconnects LocalDevVPN).
 - Full Dark Theme support with system preference auto-detection, anti-FOUC script, and manual toggle.
 - Automated CI/CD deployment via GitHub Actions to GitHub Pages.
 - Responsive mobile layout with touch-friendly navigation.
 - **Google Play platform card** — displayed with "Coming soon" badge; steps are pre-written, ready to activate when the store listing goes live.
 - **OS-aware platform highlighting** — `detectPlatform()` reads `navigator.userAgent` and `navigator.maxTouchPoints` client-side and highlights the most relevant download card with a terracotta border, glow ring, and "For your device" / "Для вашего устройства" badge.
-- **Microsoft Clarity analytics** — session recordings, heatmaps, and custom download events (`download_apk`, `download_windows`, `download_mac`, `download_ios`, `click_iloader`, `click_sideloadly`, `releases_fallback_click`) tracked via `trackEvent()` in `src/lib/utils.ts`. Project ID: `zf23mz47vo`.
+- **Microsoft Clarity analytics** — session recordings, heatmaps, and custom events (`download_apk`, `download_windows`, `download_mac`, `download_ios`, `click_iloader`, `click_apple_devices`, `click_localdevvpn`, `click_sideloadly`, `releases_fallback_click`) tracked via `trackEvent()` in `src/lib/utils.ts`. Project ID: `zf23mz47vo`.
 
 ### 🚧 In Progress
 - Verification of live DNS propagation on `https://cobible.github.io/`.
